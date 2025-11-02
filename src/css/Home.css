@@ -51,6 +51,17 @@
   .search-form {
     margin-bottom: 1rem;
   }
+  .search-button{
+    width: 25%;
+    font-size: 1rem;
+    padding: 0;
+  }
+  .movies-grid{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
 }
 
 .movies-grid {
