@@ -110,7 +110,6 @@
 @media (max-width: 600px) {
   .movie-card {
     font-size: 0.9rem;
-    width: 100%;
   }
 
   .movie-info {
