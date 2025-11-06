@@ -1,0 +1,52 @@
+.trailer-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.trailer-modal-content {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.close-button {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  padding: 5px 15px;
+  z-index: 1001;
+  transition: transform 0.2s;
+}
+
+.close-button:hover {
+  transform: scale(1.2);
+}
+
+@media (max-width: 768px) {
+  .trailer-modal-content {
+    max-width: 100%;
+  }
+  
+  .close-button {
+    top: -35px;
+    font-size: 28px;
+  }
+}

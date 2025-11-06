@@ -1,30 +1,72 @@
 .movie-card {
-  position: relative;
-  border-radius: 8px;
+  background: #1a1a1a;
+  border-radius: 12px;
   overflow: hidden;
-  background-color: #1a1a1a;
-  transition: transform 0.2s;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
 }
 
 .movie-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-8px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
 }
 
 .movie-poster {
   position: relative;
-  aspect-ratio: 2/3;
   width: 100%;
+  overflow: hidden;
 }
 
 .movie-poster img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  display: block;
+  transition: transform 0.3s ease;
 }
 
+.movie-card:hover .movie-poster img {
+  transform: scale(1.05);
+}
+
+/* Favorite Button - Top Right Corner */
+.favorite-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  /* border-radius: 20%; */
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 24px;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.favorite-btn:hover {
+  transform: scale(1.15);
+  background: rgba(0, 0, 0, 0.8);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.favorite-btn.active {
+  background: rgba(229, 9, 20, 0.3);
+  border-color: #e50914;
+  animation: heartbeat 0.3s ease;
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+/* Trailer Button - Center on Hover */
 .movie-overlay {
   position: absolute;
   top: 0;
@@ -32,93 +74,116 @@
   right: 0;
   bottom: 0;
   background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.1),
-    rgba(0, 0, 0, 0.8)
+    to top,
+    rgba(0, 0, 0, 0.9) 0%,
+    rgba(0, 0, 0, 0.4) 50%,
+    transparent 100%
   );
-  opacity: 0;
-  transition: opacity 0.2s;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 1rem;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .movie-card:hover .movie-overlay {
   opacity: 1;
 }
 
-.favorite-btn {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  color: white;
-  font-size: 1.5rem;
-  padding: 0.5rem;
-  background-color: rgba(0, 0, 0, 0.5);
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.2s;
-}
-
-.favorite-btn:hover {
-  background-color: rgba(0, 0, 0, 0.8);
-}
-
-.favorite-btn.active {
-  color: #ff4757;
-}
-
-.rating-select {
-  background-color: rgba(0, 0, 0, 0.7);
+.trailer-btn {
+  background: linear-gradient(135deg, #e50914 0%, #b20710 100%);
   color: white;
   border: none;
-  padding: 0.5rem;
-  border-radius: 4px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
-  margin-top: 0.5rem;
-}
-
-.movie-info {
-  padding: 1rem;
-  flex: 1;
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(229, 9, 20, 0.4);
 }
 
-.movie-info h3 {
-  font-size: 1rem;
-  margin: 0;
+.trailer-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(229, 9, 20, 0.6);
 }
 
-.movie-info p {
-  color: #999;
-  font-size: 0.9rem;
+.trailer-btn:disabled {
+  background: #666;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
-.user-rating {
-  color: #ffd700;
-  font-size: 0.9rem;
-  margin-top: auto;
+.play-icon {
+  font-size: 14px;
 }
 
-@media (max-width: 600px) {
-  .movie-card {
-    font-size: 0.9rem;
+.loading-spinner {
+  animation: spin 1s linear infinite;
+  display: inline-block;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
   }
+  to {
+    transform: rotate(360deg);
+  }
+}
 
-  .movie-info {
-    padding: 0.75rem;
+/* Movie Info Section */
+.movie-info {
+  padding: 16px;
+}
+
+.movie-title {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.movie-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #aaa;
+  font-size: 14px;
+}
+
+.movie-rating {
+  color: #ffd700;
+  font-weight: 600;
+}
+
+.movie-year {
+  color: #888;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .trailer-btn {
+    padding: 10px 20px;
+    font-size: 14px;
   }
 
   .favorite-btn {
-    width: 32px;
-    height: 32px;
-    font-size: 1.2rem;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    top: 8px;
+    right: 8px;
+  }
+
+  .movie-title {
+    font-size: 16px;
   }
 }
