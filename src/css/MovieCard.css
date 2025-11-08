@@ -1,26 +1,32 @@
 .movie-card {
-  background: #1a1a1a;
-  border-radius: 12px;
+  background: var(--bg-secondary);
+  border-radius: 8px;
   overflow: hidden;
   transition: all 0.3s ease;
   cursor: pointer;
   position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .movie-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
 }
 
 .movie-poster {
   position: relative;
   width: 100%;
+  aspect-ratio: 2/3;
   overflow: hidden;
+  flex-shrink: 0;
 }
 
 .movie-poster img {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
   display: block;
   transition: transform 0.3s ease;
 }
@@ -32,26 +38,26 @@
 /* Favorite Button - Top Right Corner */
 .favorite-btn {
   position: absolute;
-  top: 12px;
-  right: 12px;
-  background: rgba(0, 0, 0, 0.6);
+  top: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(10px);
   border: 2px solid rgba(255, 255, 255, 0.2);
-  /* border-radius: 20%; */
-  width: 45px;
-  height: 45px;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: 24px;
+  font-size: 20px;
   transition: all 0.3s ease;
   z-index: 10;
 }
 
 .favorite-btn:hover {
   transform: scale(1.15);
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.85);
   border-color: rgba(255, 255, 255, 0.4);
 }
 
@@ -66,17 +72,14 @@
   50% { transform: scale(1.2); }
 }
 
-/* Trailer Button - Center on Hover */
+/* View Details Button - Center on Hover */
 .movie-overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.9) 0%,
-    rgba(0, 0, 0, 0.4) 50%,
+    rgba(0, 0, 0, 0.95) 0%,
+    rgba(0, 0, 0, 0.6) 50%,
     transparent 100%
   );
   display: flex;
@@ -90,100 +93,81 @@
   opacity: 1;
 }
 
-.trailer-btn {
+.details-btn {
   background: linear-gradient(135deg, #e50914 0%, #b20710 100%);
   color: white;
   border: none;
   padding: 12px 24px;
-  border-radius: 8px;
-  font-size: 16px;
+  border-radius: 6px;
+  font-size: 15px;
   font-weight: 600;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(229, 9, 20, 0.4);
+  pointer-events: none;
 }
 
-.trailer-btn:hover {
+.movie-card:hover .details-btn {
   transform: scale(1.05);
   box-shadow: 0 6px 20px rgba(229, 9, 20, 0.6);
 }
 
-.trailer-btn:disabled {
-  background: #666;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-}
-
-.play-icon {
-  font-size: 14px;
-}
-
-.loading-spinner {
-  animation: spin 1s linear infinite;
-  display: inline-block;
-}
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* Movie Info Section */
+/* Movie Info Section - Only name and rating */
 .movie-info {
-  padding: 16px;
+  padding: 14px;
+  background: var(--bg-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .movie-title {
   color: #fff;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
-  margin: 0 0 8px 0;
+  margin: 0;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.movie-details {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: #aaa;
-  font-size: 14px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-height: 1.3;
+  min-height: 2.6em;
 }
 
 .movie-rating {
   color: #ffd700;
-  font-weight: 600;
-}
-
-.movie-year {
-  color: #888;
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-  .trailer-btn {
+  .details-btn {
     padding: 10px 20px;
     font-size: 14px;
   }
 
   .favorite-btn {
-    width: 40px;
-    height: 40px;
-    font-size: 20px;
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
     top: 8px;
     right: 8px;
   }
 
   .movie-title {
-    font-size: 16px;
+    font-size: 14px;
+  }
+
+  .movie-info {
+    padding: 12px;
+  }
+
+  .movie-rating {
+    font-size: 14px;
   }
 }

@@ -24,8 +24,7 @@ export const getMovieTrailer = async (movieId) => {
       `${BASE_URL}/movie/${movieId}/videos?api_key=${API_KEY}`
     );
     const data = await response.json();
-    
-    // Find the first YouTube trailer
+  
     const trailer = data.results.find(
       video => video.type === 'Trailer' && video.site === 'YouTube'
     );
@@ -33,6 +32,36 @@ export const getMovieTrailer = async (movieId) => {
     return trailer || null;
   } catch (error) {
     console.error('Error fetching trailer:', error);
+    return null;
+  }
+};
+
+
+
+// Add these functions to your existing api.js
+
+// Get full movie details
+export const getMovieDetails = async (movieId) => {
+  try {
+    const response = await fetch(
+      `${BASE_URL}/movie/${movieId}?api_key=${API_KEY}&append_to_response=credits,videos,similar,reviews`
+    );
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching movie details:', error);
+    return null;
+  }
+};
+
+// Get movie images (posters, backdrops)
+export const getMovieImages = async (movieId) => {
+  try {
+    const response = await fetch(
+      `${BASE_URL}/movie/${movieId}/images?api_key=${API_KEY}`
+    );
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching movie images:', error);
     return null;
   }
 };

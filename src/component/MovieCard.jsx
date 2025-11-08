@@ -1,16 +1,23 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getMovieTrailer } from '../services/api';
 import { useMovieContext } from '../contexts/MovieContext';
 import TrailerModal from './TrailerModal';
 import '../css/MovieCard.css';
 
 function MovieCard({ movie }) {
+  const navigate = useNavigate();
   const { isFavorite, addToFavorites, removeFromFavorites } = useMovieContext();
   const [trailerKey, setTrailerKey] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   
   const favorite = isFavorite(movie.id);
+
+  // Click poster to view details
+  const handleCardClick = () => {
+    navigate(`/movie/${movie.id}`);
+  };
 
   const handleWatchTrailer = async (e) => {
     e.stopPropagation();
@@ -22,7 +29,7 @@ function MovieCard({ movie }) {
       setTrailerKey(trailer.key);
       setShowModal(true);
     } else {
-      alert('No trailer available for this movie 😔');
+      alert('No trailer available for this movie ');
     }
     setIsLoading(false);
   };
@@ -43,7 +50,7 @@ function MovieCard({ movie }) {
 
   return (
     <>
-      <div className="movie-card">
+      <div className="movie-card" onClick={handleCardClick}>
         <div className="movie-poster">
           <img
             src={
@@ -54,7 +61,7 @@ function MovieCard({ movie }) {
             alt={movie.title}
           />
           
-          {/* Favorite Button - Top Right */}
+          {/* Favorite Button */}
           <button 
             className={`favorite-btn ${favorite ? 'active' : ''}`}
             onClick={onFavoriteClick}
@@ -62,33 +69,18 @@ function MovieCard({ movie }) {
             {favorite ? '❤️' : '🤍'}
           </button>
 
-          {/* Trailer Button - Center on Hover */}
+          {/* Hover overlay with "View Details" button */}
           <div className="movie-overlay">
-            <button 
-              className="trailer-btn"
-              onClick={handleWatchTrailer}
-              disabled={isLoading}
-            >
-              {isLoading ? (
-                <span className="loading-spinner">⏳</span>
-              ) : (
-                <>
-                  <span className="play-icon">▶</span>
-                  Watch Trailer
-                </>
-              )}
+            <button className="details-btn">
+              View Details
             </button>
           </div>
         </div>
         
+        {/* Info: Only name and rating */}
         <div className="movie-info">
           <h3 className="movie-title">{movie.title}</h3>
-          <div className="movie-details">
-            <span className="movie-rating">⭐ {movie.vote_average?.toFixed(1)}</span>
-            <span className="movie-year">
-              {movie.release_date?.split('-')[0]}
-            </span>
-          </div>
+          <div className="movie-rating">⭐ {movie.vote_average?.toFixed(1)}</div>
         </div>
       </div>
 

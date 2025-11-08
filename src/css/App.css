@@ -1,8 +1,20 @@
-.main-content {
-  flex: 1;
-  padding: 2rem;
-  box-sizing: border-box;
+.App {
   width: 100%;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    padding: 1rem 0.5rem;
+  }
 }
